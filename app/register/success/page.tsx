@@ -9,13 +9,16 @@ import { Suspense } from "react";
 
 const REDIRECT_SECONDS = 5;
 const APP_DOMAIN = process.env.NEXT_PUBLIC_APP_DOMAIN ?? "cattlesync.com";
+const APP_PROTOCOL = process.env.NEXT_PUBLIC_APP_PROTOCOL ?? "https";
+const APP_PORT = process.env.NEXT_PUBLIC_APP_PORT ?? "";
 
 function SuccessContent() {
   const searchParams = useSearchParams();
   const slug  = searchParams.get("slug") ?? "";
   const email = searchParams.get("email") ?? "";
 
-  const dashboardUrl = `https://${slug}.${APP_DOMAIN}/auth`;
+  const portSuffix = APP_PORT ? `:${APP_PORT}` : "";
+  const dashboardUrl = `${APP_PROTOCOL}://${slug}.${APP_DOMAIN}${portSuffix}/auth`;
 
   const [countdown, setCountdown] = useState(REDIRECT_SECONDS);
 
